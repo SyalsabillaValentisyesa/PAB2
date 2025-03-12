@@ -25,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     setState(() {
       _allMovie = allMoviesData.map((e) => Movie.fromJson(e)).toList();
+      _trendingMovie = trendingMovieData.map((e) => Movie.fromJson(e)).toList();
+      _popularMovie = popularMovieData.map((e) => Movie.fromJson(e)).toList();
     });
   }
 
@@ -120,8 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           Image.network(
-                            'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                            height: 150,
+                            'http://image.tmdb.org/t/p/w500${movie.posterPath}',
+                            height: 150,//image.
                             width: 150,
                             fit: BoxFit.cover,
                           ),

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pilem/models/movie.dart';
+import 'package:pilem/screens/detail_screen.dart';
 import 'package:pilem/sevies/api_services.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -88,10 +90,39 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            ListView.builder(
-              itemBuilder: (context, index) {
-                
-              },
+            Expanded(
+              child: ListView.builder(
+                itemCount: _searchResults.length,
+                itemBuilder: (context, index) {
+                  final Movie movie = _searchResults[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      leading: CachedNetworkImage(
+                        imageUrl:  'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                        height: 50,
+                        width: 50,
+                        fit:  BoxFit.cover, 
+                        placeholder: (context, url) {
+                          return Center(
+                            child: CircularProgressIndicator(color: Colors.blue,),
+                          );
+                        },
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                      title: Text(movie.title),
+                      onTap: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => DetailScreen(movie: movie),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
