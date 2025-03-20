@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 
-final DatabaseReference _database = 
+class ShoppingServices {
+  final DatabaseReference _database = 
     FirebaseDatabase.instance.ref().child('shopping_list');
 
 Stream<Map<String, String>> getShoppingList() {
@@ -13,6 +14,7 @@ Stream<Map<String, String>> getShoppingList() {
         items[key] = value['name'] as String;
       });
     }
+    return items;
   });
 }
 
@@ -22,4 +24,5 @@ void addShoppingItem(String itemName) {
 
 Future<void> removeShoppingItem(String key) async {
   await _database.child(key).remove();
+}
 }
